@@ -29,8 +29,7 @@ var include = function (filename) {
     document.write('<script type="text/javascript" src="' + filename + 
         '"><' + '/script>');
 }
-include('include/util.js');
-include('include/base64.js');
+include('js/util.js');
 
 
 /* Constants - need to keep in sync with jlfs driver */
@@ -364,7 +363,7 @@ EFBridge.prototype.opendone = function(target, dfrd, result) {
     Util.Debug('>>EFB opendone ' + result);
     if (!result) {
         dfrd.status = 404;
-        dfrd.reject(dfrd, 'Could not open');
+        dfrd.reject(dfrd, 'open');
         return;
     }
     var lines = result.split(/\n/);
@@ -471,7 +470,7 @@ EFBridge.prototype.open = function(target) {
         .done(this.opendone.bind(this, target, dfrd))
         .fail(function(df) {
             return function(status) {
-                df.reject(df, status);
+                df.reject(df, 'open');
             }
         }(dfrd));
     dfrd.abort = jshd.abort;
